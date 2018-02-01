@@ -1,5 +1,8 @@
 .DS_Store
 .idea/
+log
 model
 result
 image/type5_train/images
+out
+*.pyc
