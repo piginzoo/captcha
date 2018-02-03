@@ -12,26 +12,30 @@ def create_model(input_shape,num_classes):
 	model = Sequential()
 	# 加上一个2D卷积层， 32个输出（也就是卷积通道），激活函数选用relu，
 	# 卷积核的窗口选用3*3像素窗口
-	model.add(Conv2D(32,
-					(3,3),
-	                 activation='relu',
-	                 input_shape=input_shape
-	                 ))
+	model.add(Conv2D(32,(4,4),activation='relu',input_shape=input_shape))
 	# 64个通道的卷积层
-	model.add(Conv2D(64, 
-					(3,3),
-					activation='relu'
-					))
+	model.add(Conv2D(32,(4,4),activation='relu'))
 	# 池化层是2*2像素的
 	model.add(MaxPooling2D(pool_size=(2, 2)))
 	# 对于池化层的输出，采用0.35概率的Dropout
 	model.add(Dropout(0.35))
-	# 展平所有像素，比如[28*28] -> [784]
+
+	# 卷积核的窗口选用3*3像素窗口
+	model.add(Conv2D(64,(4,4),activation='relu'))
+	# 64个通道的卷积层
+	model.add(Conv2D(64,(4,4),activation='relu'))
+	# 池化层是2*2像素的
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	# 对于池化层的输出，采用0.35概率的Dropout
+	model.add(Dropout(0.35))
+
+	# 展平所有像素，比如[36*100] -> [3600]
 	model.add(Flatten())
 	# 对所有像素使用全连接层，输出为128，激活函数选用relu
 	model.add(Dense(128, activation='relu'))
 	# 对输入采用0.5概率的Dropout
 	model.add(Dropout(0.5))
+	
 	# 对刚才Dropout的输出采用softmax激活函数，得到最后结果0-9
 	model.add(Dense(num_classes, activation='softmax'))
 

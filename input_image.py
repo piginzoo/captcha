@@ -144,7 +144,11 @@ def load_all_image_by_dir(path):
   	data = []
   	file_list = os.listdir(path)
   	file_list.sort(key = lambda s:int(s[s.index("train_")+6:s.index(".png")])) 
+  	debug_count = 0
   	for file in file_list:
+  		# debug_count+=1
+  		# if debug_count>100: break #调试用，省的加载那么长时间图片
+
   		# print file
   		if (file.find(".png")==-1): continue
   		one_img = load_image(path+file)
